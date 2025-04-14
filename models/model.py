@@ -1,9 +1,9 @@
-from pydantic import BaseModel
+from pydantic import BaseModel,EmailStr
 
 class UserModelPrimary(BaseModel):
     id:int
     name:str
-    email:str
+    email:EmailStr
     
 class UserModelConfidential(UserModelPrimary):
     password:str

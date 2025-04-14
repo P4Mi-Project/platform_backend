@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-router = APIRouter()
+auth_router = APIRouter()
 
-@router.get("/register")
+@auth_router.get("/register")
 async def register():
     return {"message": "User registration endpoint"}
