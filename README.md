@@ -30,6 +30,10 @@ Make sure your remote bracet '[]'
 python -m unittest  .\tests\[your_test_file_name].py
 ```
 
+# Make sure you do this
+* Paste the google_service_account.json to the project root, which is been given to you.
+* Make sure you don't push anything sensitive to the repository. If in case you make this kind of mistake try to let the maintainer know as soon as possible.
+
 # Coding guidelines
 * Make sure to cover tests for as much compoents as possible.
 * Make  sure you have forked the project and have your own copy on your repository.
