@@ -1,23 +1,8 @@
-from pydantic import BaseModel,EmailStr
+from sqlmodel import Field, Session, SQLModel, create_engine, select
+from typing import Annotated
 
-class UserModelPrimary(BaseModel):
-    id:int
-    name:str
-    email:EmailStr
-    
-class UserModelConfidential(UserModelPrimary):
-    password:str
-    
-
-class UserAddress(BaseModel):
-    street:str
-    city:str
-    zip_code:str
-    country:str
-    
-class ServerResponse(BaseModel):
-    status:str    
-    message:str
-    extra:dict = {}
-
-
+class User(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    name: str = Field(index=True)
+    age: int | None = Field(default=None, index=True)
+    secret_name: str

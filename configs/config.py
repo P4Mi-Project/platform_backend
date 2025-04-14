@@ -1,0 +1,1 @@
+middleware_exclude_paths = ["/"]
