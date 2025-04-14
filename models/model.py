@@ -8,3 +8,14 @@ class UserModelPrimary(BaseModel):
 class UserModelConfidential(UserModelPrimary):
     password:str
     
+
+class UserAddress(BaseModel):
+    street:str
+    city:str
+    zip_code:str
+    country:str
+    
+class ServerResponse(BaseModel):
+    status:str    
+    message:str
+    extra:dict = {}
