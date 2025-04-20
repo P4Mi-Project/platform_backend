@@ -1,4 +1,5 @@
 # from starlette.middleware.base import BaseHTTPMiddleware
+from configs.firebase_admin_config import firebase_app
 from configs.config import middleware_exclude_paths
 
 
