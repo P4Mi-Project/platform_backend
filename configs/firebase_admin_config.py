@@ -2,7 +2,6 @@ from firebase_admin import credentials
 import firebase_admin
 from firebase_admin import auth
 import firebase_admin.exceptions
-from firebase_admin import firestore
 cred = credentials.Certificate("google-service.json")
 
 firebase_app = firebase_admin.initialize_app(cred)
