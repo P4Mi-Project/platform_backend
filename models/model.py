@@ -1,3 +1,5 @@
+# Deprecated file not using it anymore.
+
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 from typing import Annotated
 
