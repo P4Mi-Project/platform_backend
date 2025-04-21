@@ -1,1 +1,4 @@
-middleware_exclude_paths = ["/"]
+middleware_exclude_paths = [
+    "/",
+    "/anonymous_register"
+]
