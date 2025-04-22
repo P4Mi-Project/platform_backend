@@ -17,7 +17,7 @@ class CourseService:
             traceback.print_exc()
             return serializer.ServerResponse(status = "500", message=f"Something went wrong while trying to save the course info the database. Please have a look at the log.")
         
-    async def get_courses(self)-> list[serializer.Course] | None:
+    def get_courses(self)-> list[serializer.Course] | None:
         try:
             collection_dict_list = list()
             for item in db.collection("courses").get():
