@@ -60,3 +60,13 @@ class CourseService:
         except:
             traceback.print_exc()
             return serializer.ServerResponse(status="500", message="Something went wrong while trying to update the course data to the server.")
+        
+        
+    def delete_course(self,course_id:str) -> serializer.ServerResponse:
+        try:
+            db.collection("courses").document(course_id).delete()
+            return serializer.ServerResponse(status="200", message="Course data has been deleted successfully.")
+        except:
+            traceback.print_exc()
+            
+            return serializer.ServerResponse(status="500", message="Something went wrong while trying to delete the course from database")

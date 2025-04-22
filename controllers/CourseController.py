@@ -29,3 +29,7 @@ async def add_courses(course_list:list[serializer.Course]) -> serializer.ServerR
 @course_router.patch("/course/{course_id}")
 def update_course(course_id:str, new_course_data: serializer.Course) -> serializer.ServerResponse:
     return course_service.update_course_by_id(course_id = course_id, new_course_data = new_course_data)
+
+@course_router.delete("/course/{course_id}")
+def delete_course(course_id:str):
+    return course_service.delete_course(course_id)
