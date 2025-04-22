@@ -33,3 +33,5 @@ def update_course(course_id:str, new_course_data: serializer.Course) -> serializ
 @course_router.delete("/course/{course_id}")
 def delete_course(course_id:str):
     return course_service.delete_course(course_id)
+
+

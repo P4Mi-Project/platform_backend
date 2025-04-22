@@ -85,6 +85,19 @@ class Category(BaseModel):
     
 
 
+class Questioner(BaseModel):
+    full_name:str
+    email_address:EmailStr
+    phone_number:str
+    method_of_contact:MethodOfContact
+    best_time_to_contact:TimeToContact
+    first_language:Language
+    second_language:Language
+    third_language:Language
+    interested_topics:Category
+    have_education_or_work_exp:bool
+    additional_to_education_or_work_exp:str
+
 
 # {
 #     name: "English",
