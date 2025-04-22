@@ -17,3 +17,7 @@ async def add_course(course_data:serializer.Course)-> serializer.ServerResponse:
 @course_router.get("/courses")
 async def get_courses():
     return course_service.get_courses()
+
+@course_router.get("/course/{id}")
+async def get_course_by_id(id:str):
+    return course_service.get_course_by_id(id)

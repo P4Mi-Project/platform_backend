@@ -26,3 +26,14 @@ class CourseService:
         except:
             traceback.print_exc()
             return None
+        
+    '''
+    Sample id : 5VOFdQgBrEe6xShCIlO1
+    '''
+    def get_course_by_id(self,course_id:str) -> serializer.Course | None:
+        try:
+            return db.collection("courses").document(course_id).get().to_dict()
+        except:
+            traceback.print_exc()
+            
+            return None
