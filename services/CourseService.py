@@ -7,10 +7,10 @@ from fastapi import Depends
 class CourseService:
     def add_course(self,course_data:serializer.Course) -> serializer.ServerResponse:
         try:
-            db.collection("courses").add({
-                "title":course_data.title,
-               
-            })
+            db.collection("courses").add(
+                # "title":course_data.title,
+               course_data.model_dump(mode="json")
+            )
         
             return serializer.ServerResponse(status = "200", message=f"The course with the title : {course_data.title} has been successfully saved!")
         except:
@@ -37,3 +37,26 @@ class CourseService:
             traceback.print_exc()
             
             return None
+        
+    def add_courses(self,course_list:list[serializer.Course]) -> serializer.ServerResponse:
+        try:
+            for item in course_list:
+                db.collection("courses").add(item.model_dump(mode="json"))
+            return serializer.ServerResponse(status="200", message="The course list is successfully been added to the server.")
+        except:
+            traceback.print_exc()
+            return serializer.ServerResponse(status="500", message="Something went wrong while trying to add the course list to the server.\nPlease have a look at the log.")
+        
+        
+    def update_course_by_id(self,course_id:str,new_course_data:serializer.Course) -> serializer.ServerResponse:
+        try:
+            res = db.collection("courses").document(course_id).get().to_dict()
+            if res == None:
+                return serializer.ServerResponse(status="404", message="The course with that is does not exists in the database.")
+            else:
+                db.collection("courses").document(course_id).set(new_course_data.model_dump(mode = "json"),merge = True)
+                
+                return serializer.ServerResponse(status="200", message="The course has been successfully updated to the data base.")
+        except:
+            traceback.print_exc()
+            return serializer.ServerResponse(status="500", message="Something went wrong while trying to update the course data to the server.")
