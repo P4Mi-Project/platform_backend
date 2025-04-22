@@ -12,3 +12,8 @@ async def add_course(course_data:serializer.Course)-> serializer.ServerResponse:
     print(f"printing the value of the course : {course_data}")
     # course_model = CourseModel(title = course_data.title)
     return course_service.add_course(course_data=course_data)
+
+
+@course_router.get("/courses")
+async def get_courses():
+    return course_service.get_courses()

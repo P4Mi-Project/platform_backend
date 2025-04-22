@@ -64,10 +64,10 @@ class ServerResponse(BaseModel):
 
 
 class Course(BaseModel):
-    title:str = "Default title"
+    title:str
     url:str = ""
     image_url:str = ""
-    author_id:str = ""
+    author_id:str
     description:str = ""
     short_description:str = ""
     duration:int = 0
@@ -77,6 +77,7 @@ class Course(BaseModel):
     category:list[dict] = []
     level_id:int = 0
     course_language:str = ""
+    lang_level_requirement:Language = None
     # tags:list[str] = []
     
 class Category(BaseModel):
