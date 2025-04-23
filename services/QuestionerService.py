@@ -33,6 +33,7 @@ class QuestionerService:
         except:
             traceback.print_exc()
             return serializer.ServerResponse(status="500", message="Something went wrong while trying to update the questioner data. Please have a look at the log.")
+    
     def delete_qa(self, qa_id:str) -> serializer.ServerResponse:
         try:
             db.collection("questioners").document(qa_id).delete()
@@ -41,3 +42,14 @@ class QuestionerService:
             traceback.print_exc()
             
             return serializer.ServerResponse(status="500", message= "Something went wrong while trying to delete the questioner data. Plesae have a look at a the log.")
+        
+    def get_questionnaire_by_id(question_id:str):
+        try:
+            res = db.collection("questionnaire").document(question_id).get().to_dict()
+            if res == None:
+                return None
+            else:
+                res
+        except:
+            traceback.print_exc()
+            return serializer.ServerResponse(status="500", message="Something went wrong while trying to get the questionaire by that id. Please have a look at the log.")

@@ -4,19 +4,23 @@ from services.QuestionerService import QuestionerService
 from fastapi import Depends
 from models.model import CourseModel
 
-qa_router = APIRouter()
+questionnaire_router = APIRouter()
 
-qa_service = QuestionerService()
+questionnaire_service = QuestionerService()
 
-@qa_router.post("/questioner")
+@questionnaire_router.post("/submit")
 def add_questioner(questioner: serializer.Questioner) -> serializer.ServerResponse:
-    return qa_service.add_questioner(questioner)
+    return questionnaire_service.add_questioner(questioner)
 
 
-@qa_router.get("/questioners")
+@questionnaire_router.get("/")
 def get_questioners()-> list[serializer.Questioner]:
-    return qa_service.get_questioners()
+    return questionnaire_service.get_questioners()
 
-@qa_router.patch("/questioner/{qa_id}")
+@questionnaire_router.get("/{question_id}")
+def get_questionnaire_by_id(question_id:str):
+    return questionnaire_service.get_questionnaire_by_id(question_id)
+
+@questionnaire_router.patch("/{qa_id}")
 def update_questioner_by_id(qa_id:str, new_qa_data:serializer.Questioner) -> serializer.ServerResponse:
-    return qa_service.update_qa(qa_id)
+    return questionnaire_service.update_questioner_by_id(qa_id,new_qa_data=new_qa_data)

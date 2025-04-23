@@ -7,7 +7,7 @@ from models.model import CourseModel
 course_router = APIRouter()
 
 course_service = CourseService()
-@course_router.post("/add_course")
+@course_router.post("/course")
 async def add_course(course_data:serializer.Course)-> serializer.ServerResponse:
     print(f"printing the value of the course : {course_data}")
     # course_model = CourseModel(title = course_data.title)
