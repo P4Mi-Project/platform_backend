@@ -81,7 +81,7 @@ class Course(BaseModel):
     # tags:list[str] = []
     
 class Category(BaseModel):
-    name:str = "Default cata"
+    name:str = ""
     
 
 
