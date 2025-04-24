@@ -39,6 +39,10 @@ class Language(BaseModel):
     name:str = "English"
     level:int = 1
 
+# this class is being used to serve language data.
+class LanguageResponseModel(Language):
+    id:str = ""
+
 class AnonymousUserModel(BaseModel):
     email:EmailStr
     name:str

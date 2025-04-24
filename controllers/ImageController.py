@@ -28,3 +28,4 @@ def add_thumbnail(image: bytes,course_id)-> serializer.ServerResponse:
     except:
         import traceback; traceback.print_exc();
         return serializer.ServerResponse(status="500", message="Something went wrong while trying to add thumbnail to the course. Please have a look at the log.")
+    
