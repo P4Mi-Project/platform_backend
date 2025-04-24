@@ -9,6 +9,7 @@ from configs.firebase_admin_config import db
 import logging
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
+from firestore_size.calculate import document_size
 
 
 coors_list = [
@@ -19,58 +20,67 @@ coors_list = [
 
 
 @asynccontextmanager
-def seed_data_base(app: FastAPI):
+async def lifespan(app: FastAPI):
     # Need checks the existence of 3 collections 
     # * Category
     # * Language 
     # * 
     logging.info("Initiating the seeding process...")
     try:
-
-        if db.collection("categories").get().to_dict() == None:
-            db.collection("categories").document().add({
+        print(db.collection("categories").get())
+        if len(db.collection("categories").get()) == 0:
+            db.collection("categories").add({
                 "name" : "Learning Dutch"
-            }, {
+            })
+            {"name" : "Other"}
+            db.collection("categories").add({
                 "name": "Jobs Opportunities",
-            },
+            })
+            
+            db.collection("categories").add(
             {
                 "name": "Internships"
-            },
-            {
+            })
+            
+            db.collection("categories").add({
                 "name": "Entrepreneurship"
-            },
+            })
+            
+            db.collection("categories").add(
             {
                 "name": "Legal Procedures"
-            },
+            })
+            
+            db.collection("categories").add(
             {
                 "name": "Cultural Adaptation"
-            },
+            })
+            
+            db.collection("categories").add(
             {
                 "name": "Psychological suppport"
-            },
-            {"name" : "Other"})
+            })
             
+            db.collection("categories").add(
+            {"name" : "Other"}  
+            )
         
-        if db.collection("languages").get().to_dict() == None:
-            db.collection("languages").document().add(
-                {
-                 "name": "English",
-                },
-                {
-                 "name": "Dutch",
-                },
-                {
-                 "name": "Spanish",
-                })
-        
+        if len(db.collection("languages").get()) == 0:
+            languages = ["English", "Dutch", "Spanish"]
+
+            for lang in languages:
+                db.collection("languages").add({"name": lang})
+
         logging.info("Seeding process is ended successfully...")
+        yield
         # return True
     except:
         logging.info("Seeding process was unsuccessfull...")
         import traceback; traceback.print_exc();
+        yield
         # return False
 
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=coors_list,
