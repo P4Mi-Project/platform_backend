@@ -59,7 +59,7 @@ async def lifespan(app: FastAPI):
             
             db.collection("categories").add(
             {
-                "name": "Psychological suppport"
+                "name": "Psychological support"
             })
             
             db.collection("categories").add(
