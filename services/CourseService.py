@@ -3,6 +3,7 @@ from configs.firebase_admin_config import db
 from models.model import CourseModel
 import traceback
 from fastapi import Depends
+from fastapi.exceptions import HTTPException
 
 class CourseService:
     def add_course(self,course_data:serializer.Course) -> serializer.ServerResponse:
@@ -15,7 +16,8 @@ class CourseService:
             return serializer.ServerResponse(status = "200", message=f"The course with the title : {course_data.title} has been successfully saved!")
         except:
             traceback.print_exc()
-            return serializer.ServerResponse(status = "500", message=f"Something went wrong while trying to save the course info the database. Please have a look at the log.")
+            # return serializer.ServerResponse(status = "500", message=f"Something went wrong while trying to save the course info the database. Please have a look at the log.")
+            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to save the course info the database. Please have a look at the log.")
         
     def get_courses(self)-> list[serializer.Course] | None:
         try:
@@ -25,7 +27,9 @@ class CourseService:
             return collection_dict_list
         except:
             traceback.print_exc()
-            return None
+            # return None
+            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to save the course info the database. Please have a look at the log.")
+            
         
     '''
     Sample id : 5VOFdQgBrEe6xShCIlO1
@@ -35,8 +39,8 @@ class CourseService:
             return db.collection("courses").document(course_id).get().to_dict()
         except:
             traceback.print_exc()
+            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to save the course info the database. Please have a look at the log.")
             
-            return None
         
     def add_courses(self,course_list:list[serializer.Course]) -> serializer.ServerResponse:
         try:
@@ -45,21 +49,26 @@ class CourseService:
             return serializer.ServerResponse(status="200", message="The course list is successfully been added to the server.")
         except:
             traceback.print_exc()
-            return serializer.ServerResponse(status="500", message="Something went wrong while trying to add the course list to the server.\nPlease have a look at the log.")
+            # return serializer.ServerResponse(status="500", message="Something went wrong while trying to add the course list to the server.\nPlease have a look at the log.")
+            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to save the course info the database. Please have a look at the log.")
+            
         
         
     def update_course_by_id(self,course_id:str,new_course_data:serializer.Course) -> serializer.ServerResponse:
         try:
             res = db.collection("courses").document(course_id).get().to_dict()
             if res == None:
-                return serializer.ServerResponse(status="404", message="The course with that is does not exists in the database.")
+                # return serializer.ServerResponse(status="404", message="The course with that is does not exists in the database.")
+                raise HTTPException(status_code=404, detail="The course with that is does not exists in the database.")
             else:
                 db.collection("courses").document(course_id).set(new_course_data.model_dump(mode = "json"),merge = True)
                 
                 return serializer.ServerResponse(status="200", message="The course has been successfully updated to the data base.")
         except:
             traceback.print_exc()
-            return serializer.ServerResponse(status="500", message="Something went wrong while trying to update the course data to the server.")
+            # return serializer.ServerResponse(status="500", message="Something went wrong while trying to update the course data to the server.")
+            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to save the course info the database. Please have a look at the log.")
+        
         
         
     def delete_course(self,course_id:str) -> serializer.ServerResponse:
@@ -69,4 +78,6 @@ class CourseService:
         except:
             traceback.print_exc()
             
-            return serializer.ServerResponse(status="500", message="Something went wrong while trying to delete the course from database")
+            # return serializer.ServerResponse(status="500", message="Something went wrong while trying to delete the course from database")
+            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to save the course info the database. Please have a look at the log.")
+            
