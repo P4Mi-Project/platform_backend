@@ -33,6 +33,8 @@ class SubscriptionService:
             for doc in results:
                 doc.reference.delete()
                 
+            return serializer.ServerResponse(status="200", message="Successfully unsubscribed to the newsletter.")
+                
         except:
             traceback.print_exc()
             raise HTTPException(status_code=500, detail="Something went wrong while trying to unsubscribe to the newsletter. Plesae have a look at the log.")

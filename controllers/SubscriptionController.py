@@ -9,3 +9,7 @@ subscription_service = SubscriptionService()
 def subscribe_newsletter(email:str):
     return subscription_service.subscribe(email)
 
+@subscription_router.delete("/unsubscribe")
+def unsubscribe(email:str):
+    return subscription_service.unsubscribe(email)
+
