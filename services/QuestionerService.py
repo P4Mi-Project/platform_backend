@@ -1,6 +1,7 @@
 from configs.firebase_admin_config import db
 from serializers import serializer
 import traceback
+from fastapi.exceptions import HTTPException
 
 class QuestionerService:
     def add_questioner(self,questioner:serializer.Questioner):
@@ -11,7 +12,9 @@ class QuestionerService:
         except:
             traceback.print_exc()
             
-            return serializer.ServerResponse(status="500", message="Something went while trying to saving the questioner data to the server.")
+            # return serializer.ServerResponse(status="500", message="Something went while trying to saving the questioner data to the server.")
+            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to save the course info the database. Please have a look at the log.")
+            
         
         
     def get_questioners(self) -> list[serializer.Questioner] | None:
@@ -20,7 +23,9 @@ class QuestionerService:
         except:
             traceback.print_exc()
             
-            return None
+            # return None
+            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to get the questioner data from database. Please have a look at the log.")
+            
         
     def update_questioner_by_id(self,qa_id, new_qa_data:serializer.Questioner) -> serializer.Questioner:
         try:
@@ -32,7 +37,9 @@ class QuestionerService:
             return serializer.ServerResponse(status="200", message="The questioner has been updated successfully.")
         except:
             traceback.print_exc()
-            return serializer.ServerResponse(status="500", message="Something went wrong while trying to update the questioner data. Please have a look at the log.")
+            # return serializer.ServerResponse(status="500", message="Something went wrong while trying to update the questioner data. Please have a look at the log.")
+            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to update the questioner data. Please have a look at the log.")
+            
     
     def delete_qa(self, qa_id:str) -> serializer.ServerResponse:
         try:
@@ -41,11 +48,15 @@ class QuestionerService:
         except:
             traceback.print_exc()
             
-            return serializer.ServerResponse(status="500", message= "Something went wrong while trying to delete the questioner data. Plesae have a look at a the log.")
+            # return serializer.ServerResponse(status="500", message= "Something went wrong while trying to delete the questioner data. Plesae have a look at a the log.")
+            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to delete the questioner data. Plesae have a look at a the log.")
+            
         
     def get_questionnaire_by_id(question_id:str) -> serializer.Questioner | None:
         try:
             return db.collection("questionnaire").document(question_id).get().to_dict()
         except:
             traceback.print_exc()
-            return None
+            # return None
+            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to get questionnaire by id. Please have a look at the log.")
+            
