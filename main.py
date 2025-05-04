@@ -4,12 +4,13 @@ from fastapi import FastAPI
 from controllers.AuthenticationController import auth_router
 from controllers.QuestionerController import questionnaire_router
 from controllers.CourseController import course_router
+from controllers.CategoriesController import categories_router
+from controllers.SubscriptionController import subscription_router
 from middlewares.AuthorizationMiddleware import authorization_middleware
 from configs.firebase_admin_config import db
 from controllers.LanguageController import languages_router
 import logging
 from contextlib import asynccontextmanager
-from controllers.CategoriesController import categories_router
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -99,3 +100,4 @@ app.include_router(course_router, prefix = "/api/v1")
 app.include_router(categories_router, prefix="/api/v1")
 app.include_router(questionnaire_router, prefix="/api/v1/questionnaire")
 app.include_router(languages_router, prefix="/api/v1")
+app.include_router(subscription_router,prefix="/api/v1")
