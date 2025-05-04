@@ -28,7 +28,7 @@ class CourseService:
         except:
             traceback.print_exc()
             # return None
-            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to save the course info the database. Please have a look at the log.")
+            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to get the course info from the database. Please have a look at the log.")
             
         
     '''
@@ -39,7 +39,7 @@ class CourseService:
             return db.collection("courses").document(course_id).get().to_dict()
         except:
             traceback.print_exc()
-            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to save the course info the database. Please have a look at the log.")
+            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to get the course by id from the database. Please have a look at the log.")
             
         
     def add_courses(self,course_list:list[serializer.Course]) -> serializer.ServerResponse:
@@ -50,7 +50,7 @@ class CourseService:
         except:
             traceback.print_exc()
             # return serializer.ServerResponse(status="500", message="Something went wrong while trying to add the course list to the server.\nPlease have a look at the log.")
-            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to save the course info the database. Please have a look at the log.")
+            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to add courses info to the database. Please have a look at the log.")
             
         
         
@@ -67,7 +67,7 @@ class CourseService:
         except:
             traceback.print_exc()
             # return serializer.ServerResponse(status="500", message="Something went wrong while trying to update the course data to the server.")
-            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to save the course info the database. Please have a look at the log.")
+            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to update the course info by id. Please have a look at the log.")
         
         
         
@@ -79,5 +79,5 @@ class CourseService:
             traceback.print_exc()
             
             # return serializer.ServerResponse(status="500", message="Something went wrong while trying to delete the course from database")
-            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to save the course info the database. Please have a look at the log.")
+            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to delete the course info from the database. Please have a look at the log.")
             

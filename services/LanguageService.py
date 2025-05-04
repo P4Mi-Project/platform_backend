@@ -12,7 +12,7 @@ class LanguageService:
         except:
             import traceback; traceback.print_exc();
             # return []
-            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to save the course info the database. Please have a look at the log.")
+            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to get all the language info from the database. Please have a look at the log.")
             
         
     def get_language_by_id(self,lang_id:str) -> serializer.Language | None:
@@ -21,5 +21,5 @@ class LanguageService:
         except:
             import traceback; traceback.print_exc();
             # return None
-            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to save the course info the database. Please have a look at the log.")
+            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to get the language info from the database. Please have a look at the log.")
             
