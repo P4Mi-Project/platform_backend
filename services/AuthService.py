@@ -10,3 +10,7 @@ class AuthService:
         except:
             traceback.print_exc()
             return serializer.ServerResponse(status = "500", message="Something went wrong while trying to register anonymous user.")
+        
+        
+        
+        
