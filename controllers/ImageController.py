@@ -4,6 +4,9 @@ from services.QuestionerService import QuestionerService
 from configs.firebase_admin_config import db
 import base64
 
+from fastapi import FastAPI, File, UploadFile, Form
+
+
 img_router = APIRouter()
 
 qa_service = QuestionerService()
@@ -14,9 +17,9 @@ You need to invoke the post::course route from CourseController to be able to us
 @param course_id:str the id of the course record that is already exists in the firebase filestore.
 '''
 @img_router.post("/thumbnail")
-def add_thumbnail(image: bytes,course_id)-> serializer.ServerResponse:
+def add_thumbnail(image: UploadFile,course_id)-> serializer.ServerResponse:
     try:
-        image_b64 = base64.b64encode(image)
+        image_b64 = base64.b64encode(image.file.read())
         res = db.collection("courses").document(course_id).get().to_dict()
         if res != None:
             db.collection("courses").document(course_id).set({
