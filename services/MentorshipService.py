@@ -27,4 +27,17 @@ class MentorshipService:
         except:
             import traceback; traceback.print_exc()
             raise HTTPException(status_code=500, detail=f"Something went wrong while trying to get mentor by id. Please have a look at the log.")
-            
+    
+    def update_mentor_by_id(mentor_id:str, new_mentor_data:serializer.Mentor)-> serializer.ServerResponse:
+        try:
+            res = db.collection("mentors").document(mentor_id).get()
+            if res == None:
+                raise HTTPException(status_code=404, detail=f"The mentor does not exist by that mentor id.")
+            else:
+                db.collection("mentors").document(mentor_id).set(new_mentor_data.model_dump(mode="json"), merge = True)
+                
+                return serializer.ServerResponse(status="200",message= f"The mentor data by mentor id {mentor_id} has been updated successfully.")
+                
+        except:
+            import traceback;traceback.print_exc()
+            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to update mentor by id. Please have a look at the log.")

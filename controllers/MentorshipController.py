@@ -14,3 +14,7 @@ def get_mentor_list()-> list[serializer.Mentor]:
 @mentorship_router.get("/mentor/{mentor_id}")
 def get_mentor_by_id(mentor_id:str):
     mentorship_service.get_mentor_by_id(mentor_id)
+    
+@mentorship_router.patch("/mentor/{mentor_id}")
+def update_mentor_by_id(mentor_id:str,new_mentor_data:serializer.Mentor) -> serializer.ServerResponse:
+    return mentorship_service.update_mentor_by_id(mentor_id, new_mentor_data)
