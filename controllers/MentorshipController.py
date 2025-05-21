@@ -7,6 +7,10 @@ mentorship_router = APIRouter()
 
 mentorship_service = MentorshipService()
 
-@mentorship_router.get("mentors")
+@mentorship_router.get("/mentors")
 def get_mentor_list()-> list[serializer.Mentor]:
     return mentorship_service.get_mentor_list()
+
+@mentorship_router.get("/mentor/{mentor_id}")
+def get_mentor_by_id(mentor_id:str):
+    pass
