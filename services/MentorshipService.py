@@ -41,3 +41,11 @@ class MentorshipService:
         except:
             import traceback;traceback.print_exc()
             raise HTTPException(status_code=500, detail=f"Something went wrong while trying to update mentor by id. Please have a look at the log.")
+        
+    def delete_mentor_by_id(mentor_id:str)-> serializer.ServerResponse:
+        try:
+            db.collection("mentors").document(mentor_id).delete()
+            return serializer.ServerResponse(status="200", message="Mentor data has been deleted successfully.")
+        except:
+            import traceback; traceback.print_exc()
+            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to delete mentor by id. Please have a look at the log.")
