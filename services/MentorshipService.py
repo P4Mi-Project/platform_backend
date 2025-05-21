@@ -23,7 +23,7 @@ class MentorshipService:
         
     def get_mentor_by_id(mentor_id:str) -> serializer.Mentor:
         try:
-            return db.collection("mentors").document(mentor_id).get()
+            return db.collection("mentors").document(mentor_id).get().to_dict()
         except:
             import traceback; traceback.print_exc()
             raise HTTPException(status_code=500, detail=f"Something went wrong while trying to get mentor by id. Please have a look at the log.")
