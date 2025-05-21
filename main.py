@@ -7,6 +7,7 @@ from controllers.CourseController import course_router
 from controllers.CategoriesController import categories_router
 from controllers.SubscriptionController import subscription_router
 from controllers.ImageController import img_router
+from controllers.MentorshipController import mentorship_router
 from middlewares.AuthorizationMiddleware import authorization_middleware
 from configs.firebase_admin_config import db
 from controllers.LanguageController import languages_router
@@ -103,3 +104,4 @@ app.include_router(questionnaire_router, prefix="/api/v1/questionnaire")
 app.include_router(languages_router, prefix="/api/v1")
 app.include_router(subscription_router,prefix="/api/v1")
 app.include_router(img_router,prefix="/api/v1")
+app.include_router(mentorship_router,prefix="/api/v1")

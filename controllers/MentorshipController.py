@@ -13,4 +13,4 @@ def get_mentor_list()-> list[serializer.Mentor]:
 
 @mentorship_router.get("/mentor/{mentor_id}")
 def get_mentor_by_id(mentor_id:str):
-    pass
+    mentorship_service.get_mentor_by_id(mentor_id)
