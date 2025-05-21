@@ -21,4 +21,8 @@ def update_mentor_by_id(mentor_id:str,new_mentor_data:serializer.Mentor) -> seri
 
 @mentorship_router.delete("/mentor/{mentor_id}")
 def delete_mentor_by_id(mentor_id):
-    pass
+    return mentorship_service.delete_mentor_by_id(mentor_id)
+
+@mentorship_service.post("/mentor")
+def add_mentor(mentor_data: serializer.Mentor) -> serializer.ServerResponse:
+    mentorship_service.add_mentor(mentor_data)

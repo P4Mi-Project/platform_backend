@@ -49,3 +49,14 @@ class MentorshipService:
         except:
             import traceback; traceback.print_exc()
             raise HTTPException(status_code=500, detail=f"Something went wrong while trying to delete mentor by id. Please have a look at the log.")
+        
+        
+    def add_mentor(mentor_data:serializer.Mentor)-> serializer.ServerResponse:
+        try:
+            db.collection("mentors").add(mentor_data.model_dump(mode="json"))
+            
+            return serializer.ServerResponse(status="200", message="The mentor data has been added to the database successfully.")
+        except:
+            import traceback; traceback.print_exc()
+            raise HTTPException(status_code=500, detail=f"Something went wrong while trying to add mentor to database. Please have a look at the log.")
+            
