@@ -103,6 +103,16 @@ class Questioner(BaseModel):
     additional_to_education_or_work_exp:str
 
 
+class Mentor(BaseModel):
+    full_name:str
+    description:str
+    spoken_language:list[Language]
+    country:str
+    post_code:str
+    city:str
+    street_address:str
+    profile_image_url:str
+
 # {
 #     name: "English",
 #     level : ["basic", "inermediate"....]

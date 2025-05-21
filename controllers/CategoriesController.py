@@ -13,3 +13,7 @@ def get_all_categories() -> list[serializer.Category]:
 @categories_router.get("/category/{category_id}")
 def get_category_by_id(category_id:str) -> serializer.Category:
     return categories_service.get_category_by_id(category_id=category_id)
+
+@categories_router.get("/course/<category_id>")
+def get_courses_by_category_id(category_id:str):
+    pass

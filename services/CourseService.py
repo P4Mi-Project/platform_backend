@@ -81,3 +81,15 @@ class CourseService:
             # return serializer.ServerResponse(status="500", message="Something went wrong while trying to delete the course from database")
             raise HTTPException(status_code=500, detail=f"Something went wrong while trying to delete the course info from the database. Please have a look at the log.")
             
+
+    '''
+    Todo : need to test this method before integrating to the frontend.
+    This method fetches list of courses based on the category id.
+    @param category_id:int -> The id of the category.
+    '''
+    def get_courses_by_category_id(category_id:str) -> list[serializer.Category]:
+        try:
+            db.collection("courses").where()
+        except:
+            traceback.print_exc()
+            HTTPException(status_code=500, detail="Something went wrong while trying fetch course list based on category id. Please have a look at the log.")
