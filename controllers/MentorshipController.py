@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from serializers import serializer
 from services.MentorshipService import MentorshipService
 
-
+# Todo : need to test this endpoint
 mentorship_router = APIRouter()
 
 mentorship_service = MentorshipService()
@@ -15,7 +15,7 @@ def get_mentor_list()-> list[serializer.Mentor]:
 def get_mentor_by_id(mentor_id:str):
     mentorship_service.get_mentor_by_id(mentor_id)
     
-@mentorship_router.patch("/mentor/{mentor_id}")
+@mentorship_router.patch("/mentor/{mentor_id}",response_model = serializer.ServerResponse,)
 def update_mentor_by_id(mentor_id:str,new_mentor_data:serializer.Mentor) -> serializer.ServerResponse:
     return mentorship_service.update_mentor_by_id(mentor_id, new_mentor_data)
 
@@ -23,6 +23,6 @@ def update_mentor_by_id(mentor_id:str,new_mentor_data:serializer.Mentor) -> seri
 def delete_mentor_by_id(mentor_id):
     return mentorship_service.delete_mentor_by_id(mentor_id)
 
-@mentorship_service.post("/mentor")
+@mentorship_router.post("/mentor")
 def add_mentor(mentor_data: serializer.Mentor) -> serializer.ServerResponse:
     mentorship_service.add_mentor(mentor_data)

@@ -5,11 +5,12 @@ import traceback
 from fastapi import Depends
 from fastapi.exceptions import HTTPException
 
+# Todo : need to test this service
 class MentorshipService:
     def __init__(self):
         pass
     
-    def get_mentor_list()-> list[serializer.Mentor]:
+    def get_mentor_list(self)-> list[serializer.Mentor]:
         try:
             mentor_result_list:list[serializer.Mentor] = db.collection("mentors").get()
             mentor_list = list()
@@ -21,20 +22,20 @@ class MentorshipService:
             import traceback; traceback.print_exc()
             raise HTTPException(status_code=500, detail=f"Something went wrong while trying to get mentor list. Please have a look at the log.")
         
-    def get_mentor_by_id(mentor_id:str) -> serializer.Mentor:
+    def get_mentor_by_id(self,mentor_id:str) -> serializer.Mentor:
         try:
             return db.collection("mentors").document(mentor_id).get().to_dict()
         except:
             import traceback; traceback.print_exc()
             raise HTTPException(status_code=500, detail=f"Something went wrong while trying to get mentor by id. Please have a look at the log.")
     
-    def update_mentor_by_id(mentor_id:str, new_mentor_data:serializer.Mentor)-> serializer.ServerResponse:
+    def update_mentor_by_id(self,mentor_id:str, new_mentor_data:serializer.Mentor)-> serializer.ServerResponse:
         try:
             res = db.collection("mentors").document(mentor_id).get()
             if res == None:
                 raise HTTPException(status_code=404, detail=f"The mentor does not exist by that mentor id.")
             else:
-                db.collection("mentors").document(mentor_id).set(new_mentor_data.model_dump(mode="json"), merge = True)
+                db.collection("mentors").document(mentor_id).set(new_mentor_data.model_dump(mode="json"), merge = True) # A bug is facing .that is ; if the mentor doc does not exists it's creating the doc becuase of merge = True attribute. Todo
                 
                 return serializer.ServerResponse(status="200",message= f"The mentor data by mentor id {mentor_id} has been updated successfully.")
                 
@@ -42,7 +43,7 @@ class MentorshipService:
             import traceback;traceback.print_exc()
             raise HTTPException(status_code=500, detail=f"Something went wrong while trying to update mentor by id. Please have a look at the log.")
         
-    def delete_mentor_by_id(mentor_id:str)-> serializer.ServerResponse:
+    def delete_mentor_by_id(self,mentor_id:str)-> serializer.ServerResponse:
         try:
             db.collection("mentors").document(mentor_id).delete()
             return serializer.ServerResponse(status="200", message="Mentor data has been deleted successfully.")
@@ -51,7 +52,7 @@ class MentorshipService:
             raise HTTPException(status_code=500, detail=f"Something went wrong while trying to delete mentor by id. Please have a look at the log.")
         
         
-    def add_mentor(mentor_data:serializer.Mentor)-> serializer.ServerResponse:
+    def add_mentor(self,mentor_data:serializer.Mentor)-> serializer.ServerResponse:
         try:
             db.collection("mentors").add(mentor_data.model_dump(mode="json"))
             
@@ -60,3 +61,19 @@ class MentorshipService:
             import traceback; traceback.print_exc()
             raise HTTPException(status_code=500, detail=f"Something went wrong while trying to add mentor to database. Please have a look at the log.")
             
+    '''
+    structure for message data:
+    {
+        "sender_id": "sdfslkdfa",
+        "receiver_id": "receiver_user_id",
+        "body" : "asdfl;kjdfk",
+        "media": [array of image url],
+        "date": ""
+}
+    '''         
+    def send_message_to_mentor(self):
+        try:
+            db.collection("messages").document("")
+        except:
+            import traceback; traceback.print_exc()
+            raise HTTPException(status_code=500, detail="Something went wrong while trying to send message to mentor.")

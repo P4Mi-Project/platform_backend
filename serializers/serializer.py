@@ -104,14 +104,22 @@ class Questioner(BaseModel):
 
 
 class Mentor(BaseModel):
-    full_name:str
-    description:str
-    spoken_language:list[Language]
-    country:str
-    post_code:str
-    city:str
-    street_address:str
-    profile_image_url:str
+    full_name:str = ""
+    description:str = ""
+    spoken_language:list[Language] = []
+    country:str = ""
+    post_code:str = ""
+    city:str = ""
+    street_address:str = ""
+    profile_image_url:str = ""
+    
+class MentorMessage(BaseModel):
+    name:str = ""
+    receiver_id:str # usually it has to be the id of mentor; later on we will fetch the email from the record and then send the notification via email
+    surname:str = ""
+    email:EmailStr = ""
+    message:str = ""
+
 
 # {
 #     name: "English",
