@@ -26,3 +26,7 @@ def delete_mentor_by_id(mentor_id):
 @mentorship_router.post("/mentor")
 def add_mentor(mentor_data: serializer.Mentor) -> serializer.ServerResponse:
     mentorship_service.add_mentor(mentor_data)
+    
+@mentorship_router.post("/message")
+def send_message(mentor_message:serializer.MentorMessage) -> serializer.ServerResponse:
+    pass

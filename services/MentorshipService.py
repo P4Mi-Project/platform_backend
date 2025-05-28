@@ -1,5 +1,6 @@
 from serializers import serializer
 from configs.firebase_admin_config import db
+from serializers.serializer import MentorMessage
 from models.model import CourseModel
 import traceback
 from fastapi import Depends
@@ -60,8 +61,13 @@ class MentorshipService:
         except:
             import traceback; traceback.print_exc()
             raise HTTPException(status_code=500, detail=f"Something went wrong while trying to add mentor to database. Please have a look at the log.")
+       
             
     '''
+    Messages would be in two different ways ..
+    One between anonymous user and mentor
+    Second between regular user and mentor
+    ======================================>
     structure for message data:
     {
         "sender_id": "sdfslkdfa",
@@ -71,9 +77,13 @@ class MentorshipService:
         "date": ""
 }
     '''         
-    def send_message_to_mentor(self):
+    def send_message_anonym(self, mentor_message:serializer.MentorMessage ) -> serializer.ServerResponse:
         try:
+            # there willbe a room created for the user and mentor conversation.
             db.collection("messages").document("")
         except:
             import traceback; traceback.print_exc()
             raise HTTPException(status_code=500, detail="Something went wrong while trying to send message to mentor.")
+        
+    def send_message(self):
+        pass
