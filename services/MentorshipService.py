@@ -1,8 +1,5 @@
 from serializers import serializer
 from configs.firebase_admin_config import db
-from serializers.serializer import MentorMessage
-from models.model import CourseModel
-import traceback
 from fastapi import Depends
 from fastapi.exceptions import HTTPException
 
@@ -77,13 +74,21 @@ class MentorshipService:
         "date": ""
 }
     '''         
-    def send_message_anonym(self, mentor_message:serializer.MentorMessage ) -> serializer.ServerResponse:
+    def send_message_anonym(self, mentor_message:serializer.MentorMessageAnonym) -> serializer.ServerResponse:
         try:
             # there willbe a room created for the user and mentor conversation.
-            db.collection("messages").document("")
+            db.collection("messages_mentors_anonym").document("")
         except:
             import traceback; traceback.print_exc()
             raise HTTPException(status_code=500, detail="Something went wrong while trying to send message to mentor.")
-        
-    def send_message(self):
-        pass
+    
+    '''
+    This method for authenticated user.
+    '''    
+    def send_message_to_mentor(self,mentor_message:serializer.MentorMessageAuthUser):
+        try:
+            db.collection("messages_mentors_session").document(mentor_message.model_dump(mode="json")["sender_id"]+"_"+mentor_message.model_dump(mode="json")["receiver_id"]).add(mentor_message.model_dump(mode = "json"))
+            return serializer.ServerResponse(status="200", message="The message has been successfully sent to the receiver.")
+        except:
+            import traceback; traceback.print_exc()
+            raise HTTPException(status_code=500, detail="Something went wrong while trying to send message to mentor.")

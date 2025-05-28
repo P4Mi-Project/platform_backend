@@ -123,10 +123,10 @@ class MentorMessageAnonym(BaseModel):
     
 class MentorMessageAuthUser(BaseModel):
     send_id:str = ""
-    receiver_id = ""
+    receiver_id:str = ""
     message:str = ""
     timestamp:str = ""
-    media:str = list[str] # this one might be removed later.
+    media:list[str] = list() # this one might be removed later.
 
 
 # {
