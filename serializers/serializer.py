@@ -118,14 +118,14 @@ class MentorMessageAnonym(BaseModel):
     receiver_id:str # usually it has to be the id of mentor; later on we will fetch the email from the record and then send the notification via email
     surname:str = ""
     email:EmailStr = "" # email will be the factor to search user data on the firestore database. 
-    timestamp:str = ""
+    timestamp:str = datetime.datetime.now()
     message:str = ""
     
 class MentorMessageAuthUser(BaseModel):
     send_id:str = ""
     receiver_id:str = ""
     message:str = ""
-    timestamp:str = ""
+    timestamp:str = datetime.datetime.now()
     media:list[str] = list() # this one might be removed later.
 
 
