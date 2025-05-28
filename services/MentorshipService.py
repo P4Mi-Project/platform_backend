@@ -2,11 +2,12 @@ from serializers import serializer
 from configs.firebase_admin_config import db
 from fastapi import Depends
 from fastapi.exceptions import HTTPException
+from services.EmailService import EmailService
 
 # Todo : need to test this service
 class MentorshipService:
     def __init__(self):
-        pass
+        self.email_service = EmailService()
     
     def get_mentor_list(self)-> list[serializer.Mentor]:
         try:
@@ -59,7 +60,17 @@ class MentorshipService:
             import traceback; traceback.print_exc()
             raise HTTPException(status_code=500, detail=f"Something went wrong while trying to add mentor to database. Please have a look at the log.")
        
-            
+         
+         
+    def get_user_id_by_mail(self,email:str)-> str:
+        try:
+            user = db.collection("users").where({"email":email}).get()
+            if len(user) > 0:
+                return user[0].get("id")
+        except:
+            import traceback; traceback.print_exc()
+            raise HTTPException(status_code=500, detail="Something went wrong while trying to get the user id based on email. Plesae have a look at the log.")
+           
     '''
     Messages would be in two different ways ..
     One between anonymous user and mentor
@@ -73,11 +84,13 @@ class MentorshipService:
         "media": [array of image url],
         "date": ""
 }
-    '''         
+    '''     
     def send_message_anonym(self, mentor_message:serializer.MentorMessageAnonym) -> serializer.ServerResponse:
         try:
             # there willbe a room created for the user and mentor conversation.
-            db.collection("messages_mentors_anonym").document("")
+            sender_id = self.get_user_id_by_mail(mentor_message.email)
+            db.collection("messages_mentors_anonym").document(f"{sender_id}_{mentor_message.receiver_id}").add(mentor_message.model_dump(mode="json"))
+            self.email_service.send_mentor_user_message_notification(f"{mentor_message.name} {mentor_message.surname}")
         except:
             import traceback; traceback.print_exc()
             raise HTTPException(status_code=500, detail="Something went wrong while trying to send message to mentor.")
@@ -92,3 +105,4 @@ class MentorshipService:
         except:
             import traceback; traceback.print_exc()
             raise HTTPException(status_code=500, detail="Something went wrong while trying to send message to mentor.")
+        
