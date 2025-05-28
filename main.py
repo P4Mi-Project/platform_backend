@@ -8,16 +8,17 @@ from controllers.CategoriesController import categories_router
 from controllers.SubscriptionController import subscription_router
 from controllers.ImageController import img_router
 from controllers.MentorshipController import mentorship_router
-from middlewares.AuthorizationMiddleware import authorization_middleware
 from configs.firebase_admin_config import db
 from controllers.LanguageController import languages_router
 import logging
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
+from middlewares.AuthorizationMiddleware import AuthMiddleWare
+
 
 
 coors_list = [
-    "http://localhost:8001/",
+    "http://localhost:8080/",
     "https://l76kp2k5-8001.uks1.devtunnels.ms/"
 ]
 
@@ -87,11 +88,16 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
+    # allow_origins=["*"],
     allow_origins=coors_list,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    
+    
+    
 )
+app.add_middleware(AuthMiddleWare)
 
 app.get("/", )
 # app.add_middleware(authorization_middleware)

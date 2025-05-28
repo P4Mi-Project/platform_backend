@@ -29,8 +29,8 @@ def add_mentor(mentor_data: serializer.Mentor) -> serializer.ServerResponse:
     
 @mentorship_router.post("/message")
 def send_message(mentor_message:serializer.MentorMessageAnonym) -> serializer.ServerResponse:
-    pass
+    mentorship_service.send_message_anonym(mentor_message=mentor_message)
 
-@mentorship_router.post("/message/auth")
+@mentorship_router.post("/message/auth",response_model=serializer.ServerResponse)
 def send_message_to_mentor_auth(mentor_message: serializer.MentorMessageAuthUser) -> serializer.ServerResponse:
     mentorship_service.send_message_to_mentor(mentor_message=mentor_message)
