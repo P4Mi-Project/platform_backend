@@ -96,3 +96,9 @@ class CourseService:
             
     def search_category_by_text(self):
         pass
+    
+    def enroll_to_course(self):
+        pass
+    def un_enroll_from_course(self):
+        pass
+    

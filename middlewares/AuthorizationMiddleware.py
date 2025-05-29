@@ -11,9 +11,9 @@ class AuthMiddleWare(BaseHTTPMiddleware):
         try:
             print("Hello world the middleware is working.")
             
-            # if request.url.path in middleware_exclude_paths:
-            #     response = await call_next(request)
-            #     return response
+            if request.url.path in middleware_exclude_paths:
+                response = await call_next(request)
+                return response
             # else:
                 # auth_header = request.headers.get("Authorization", None)
                 # if auth_header is not None:
