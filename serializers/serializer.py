@@ -129,6 +129,16 @@ class MentorMessageAuthUser(BaseModel):
     media:list[str] = list() # this one might be removed later.
 
 
+class CommunityPost(BaseModel):
+    title:str = ""
+    timestamp:str = datetime.datetime.now()
+    author_name:str
+    author_email:str
+    body:str = ""
+    media:list[str] = "" # this might get removed in future.
+    categories:list[Category] = list()
+    is_hidden:bool = False
+
 # {
 #     name: "English",
 #     level : ["basic", "inermediate"....]

@@ -85,12 +85,13 @@ class MentorshipService:
         "date": ""
 }
     '''     
+    #Todo need to update the email notification portion.
     def send_message_anonym(self, mentor_message:serializer.MentorMessageAnonym) -> serializer.ServerResponse:
         try:
             # there willbe a room created for the user and mentor conversation.
             sender_id = self.get_user_id_by_mail(mentor_message.email)
             db.collection("messages_mentors_anonym").document(f"{sender_id}_{mentor_message.receiver_id}").add(mentor_message.model_dump(mode="json"))
-            self.email_service.send_mentor_user_message_notification(f"{mentor_message.name} {mentor_message.surname}")
+            self.email_service.send_mentor_user_message_notification(f"{mentor_message.name} {mentor_message.surname}",) # need to be updated
         except:
             import traceback; traceback.print_exc()
             raise HTTPException(status_code=500, detail="Something went wrong while trying to send message to mentor.")
@@ -98,6 +99,7 @@ class MentorshipService:
     '''
     This method for authenticated user.
     '''    
+    # todo need to add email template.
     def send_message_to_mentor(self,mentor_message:serializer.MentorMessageAuthUser):
         try:
             db.collection("messages_mentors_session").document(mentor_message.model_dump(mode="json")["sender_id"]+"_"+mentor_message.model_dump(mode="json")["receiver_id"]).add(mentor_message.model_dump(mode = "json"))

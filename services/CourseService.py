@@ -93,3 +93,6 @@ class CourseService:
         except:
             traceback.print_exc()
             HTTPException(status_code=500, detail="Something went wrong while trying fetch course list based on category id. Please have a look at the log.")
+            
+    def search_category_by_text(self):
+        pass
